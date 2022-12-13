@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<!--  org.springframework.beans.factory.BeanDefinitionStoreException 에러 발생 
+			이는 src/main/resources 밑에 xml파일을 위치시키면 된다. class path에서 이 파일을 못찾기 때문에 에러가 발생-->
+			
+			
+	<!--  dataSource인터페이스가 사용되면서 아래 connectionMaker인터페이스는 지운다 -->
+	<!--  bean id="connectionMaker" class="springbook.user.dao.DConnectionMaker" -->
+	<!--  DaoFactory의 bean과 비교해보자 -->
+
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+		<property name="driverClass" value="oracle.jdbc.driver.OracleDriver"/>
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
+		<property name="username" value="scott"/>
+		<property name="password" value="tiger"/>
+	</bean>
+
+	<bean id="userDao" class="springbook.user.dao.UserDao">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	
+</beans>
